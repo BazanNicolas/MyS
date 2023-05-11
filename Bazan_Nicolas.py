@@ -7,10 +7,10 @@ def ejercicio1a():
     q = 1/5
     c = max(p)/q
     while True:
-        Y = randint(0, 4)
+        Y = randint(1, 5)
         u = random()
-        if u < p[Y]/(c*q):  # Y-1 porque el indice de la lista empieza en 0
-            return Y
+        if u < p[Y-1]/(c*q):  # Y-1 porque el indice de la lista empieza en 0
+            return Y-1
 
 
 def ejercicio1b(N):
