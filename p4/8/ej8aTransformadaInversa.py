@@ -37,4 +37,4 @@ def valorExacto(k, lamda):
     return prob
 
 
-# print(valorExacto(10, 0.7))
+print(valorExacto(10, 0.7))
