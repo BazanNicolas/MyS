@@ -15,10 +15,29 @@ def normalvariate(mu, sigma):
         return mu + z * sigma
 
 
-print(normalvariate(0, 1))
+# print(normalvariate(0, 1))
+
 # Media muestral con 10000 iteraciones
-# N = 10000
-# suma = 0
-# for i in range(N):
-#     suma += normalvariate(0, 1)
-# print(suma / N)
+def mean():
+    N = 10000
+    suma = 0
+    for _ in range(N):
+        suma += normalvariate(0, 1)
+    return suma / N
+
+
+mean_ = mean()
+print(f"Media muestral: {mean_}")
+# Varianza muestral 10.000 valores generados por ej9a
+
+
+def var():
+    N = 10000
+    suma = 0
+    for _ in range(N):
+        suma += (normalvariate(0, 1) - mean_)**2
+    return suma / (N - 1)
+
+
+var_ = var()
+print(f"Varianza muestral: {var_}")
