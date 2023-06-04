@@ -6,7 +6,7 @@ def g(x):
 
 def Media_Muestral_X(z_alfa_2, L): #z_alfa_2 = z_(alfa/2)
     'Confianza = (1 - alfa)%, amplitud del intervalo: L'
-    d = L / (2 * z_alfa_2)
+    d = L / (z_alfa_2) # NO (2 * z_alfa_2) porq pide semiancho
     # Simulo X de 0 a infinito como haciamos en monte carlo
     rand = random()
     Media = (1/rand**2) * g(1/rand - 1)    

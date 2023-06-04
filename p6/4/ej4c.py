@@ -1,5 +1,5 @@
-from random import random
 from math import sqrt
+from random import random
 
 def N():
     N = 0
@@ -9,16 +9,18 @@ def N():
         N += 1
     return N
 
-def ej4a():
+
+def Media_Muestral_X(z_alfa_2, L): #z_alfa_2 = z_(alfa/2)
+    'Confianza = (1 - alfa)%, amplitud del intervalo: L'
+    d = L / (2* z_alfa_2)
     Media = N()
     Scuad, n = 0, 1
-    while n<=100 or sqrt(Scuad/n)> 0.01:
+    while n <= 100 or sqrt(Scuad / n) > d:
         n += 1
-        X = N()          
+        X = N()
         MediaAnt = Media
         Media = MediaAnt + (X - MediaAnt) / n
         Scuad = Scuad * (1 - 1 /(n-1)) + n*(Media - MediaAnt)**2
-    return Media, Scuad
+    return Media
 
-res = ej4a()
-print("Media: ", res[0])
+print(Media_Muestral_X(1.96, 0.025))
