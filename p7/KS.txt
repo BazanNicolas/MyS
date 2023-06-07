@@ -1,0 +1,19 @@
+p-valor = 0
+for i in range(nSim):
+    generar X1, ..., Xn
+    ordenar X1, ..., Xn
+    dsim = D(muestra generada)
+    if dsim >= d:
+        p-valor += 1
+p-valor = p-valor / nSim
+
+Con uniformes:
+
+pvalor = 0
+for i in range(Nsim):
+    generar U1, U2,..., Un
+    ordenar U_1 < U_2 < ... U_n
+    dsim = max{ U_i - (i-1)/n, (i/n) - U_i}
+    if dsim <= d:
+        pvalor += 1
+pvalor = pvalor / Nsim

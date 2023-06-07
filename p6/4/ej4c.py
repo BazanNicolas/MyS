@@ -21,6 +21,6 @@ def Media_Muestral_X(z_alfa_2, L): #z_alfa_2 = z_(alfa/2)
         MediaAnt = Media
         Media = MediaAnt + (X - MediaAnt) / n
         Scuad = Scuad * (1 - 1 /(n-1)) + n*(Media - MediaAnt)**2
-    return Media
+    return Scuad
 
 print(Media_Muestral_X(1.96, 0.025))
