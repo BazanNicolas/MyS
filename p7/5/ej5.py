@@ -12,7 +12,10 @@ def binomial(x, n, p):
     return binom.pmf(x, n, p)
 
 def generarBinomial(n,p):
-    c = p / (1 - p)
+    if p == 1:
+        c = float('inf')
+    else:
+        c = p / (1 - p)
     prob = (1 - p) ** n
     F = prob; i=0
     U = random()
@@ -21,7 +24,6 @@ def generarBinomial(n,p):
         F += prob
         i += 1
     return i
-
 
 def ej2b(nSim):
     datos = [6, 7, 3, 4, 7, 3, 7, 2, 6, 3, 7, 8, 2, 1, 3, 5, 8, 7]
@@ -42,7 +44,7 @@ def ej2b(nSim):
             muestra.append(generarBinomial(n,p))
         p = sum(muestra) / (n * m)
         # Contar la cantidad de ocurrencias de cada número
-        frecuencias_obs_simuladas = np.bincount(muestra)[1:] # [1:] dado que bincount cuenta desde 0 y no desde 1
+        frecuencias_obs_simuladas = np.bincount(muestra)
         frecuencias_esp_simuladas = [binomial(i, 8, p)*m for i in range(9)]
         t = sum((obs - esp)**2 / esp for obs, esp in zip(frecuencias_obs_simuladas, frecuencias_esp_simuladas))
         if t >= t0:
@@ -65,9 +67,15 @@ p = sum(datos) / (n * m)
 frecuencias_esp = [binomial(i, 8, p)*m for i in range(9)]
 
 # Calcular el estadístico de prueba chi-cuadrada
-t0 = sum((obs - esp)**2 / esp for obs, esp in zip(frecuencias_obs, frecuencias_esp))
+estadistico_prueba = sum((obs - esp)**2 / esp for obs, esp in zip(frecuencias_obs, frecuencias_esp))
+print("Estadístico de prueba:", estadistico_prueba)
 
-print(frecuencias_obs)
+# PREGUNTAR CUANTOS GRADOS DE LIBERTAD SON
+# k-1 grados de libertad -1 porque el parametro p no se conoce, entonces los grados de libertad son k-1-1 = k-2
 df = len(frecuencias_obs) - 3
-p_valor = 1 - chi2.cdf(t0, df)
+print("Grados de libertad:", df)
+print(frecuencias_obs)
+p_valor = 1 - chi2.cdf(estadistico_prueba, df)
 print("P-valor:", p_valor)
+
+# PREGUNTAR 
