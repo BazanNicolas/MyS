@@ -95,3 +95,5 @@ def ej6e(nSim):
     return p_valor / nSim
 
 print("P-valor simulado:", ej6e(1000))
+
+# P-valor es 0.36605389988682613 entonces podemos concluír que la rueda es justa
