@@ -56,3 +56,4 @@ print(tabulate(table, headers, tablefmt="fancy_grid"))
 # 90% -> 1.645
 # 95% -> 1.96
 # 99% -> 2.576
+# 98 % ->  2.33

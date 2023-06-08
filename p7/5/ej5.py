@@ -51,7 +51,7 @@ def ej2b(nSim):
             p_valor += 1
     return p_valor / nSim
 
-print("P-valor simulado:", ej2b(1000))
+# print("P-valor simulado:", ej2b(1000))
 # t0 31,49
 #p valor 0,01
 
@@ -61,20 +61,22 @@ print("P-valor simulado:", ej2b(1000))
 datos = [6, 7, 3, 4, 7, 3, 7, 2, 6, 3, 7, 8, 2, 1, 3, 5, 8, 7]
 n = 8
 frecuencias_obs = np.bincount(datos)
+print(frecuencias_obs)
 m = len(datos)
 # Frecuencias esperadas
 p = sum(datos) / (n * m)
+print(p)
 frecuencias_esp = [binomial(i, 8, p)*m for i in range(9)]
 
 # Calcular el estadístico de prueba chi-cuadrada
 estadistico_prueba = sum((obs - esp)**2 / esp for obs, esp in zip(frecuencias_obs, frecuencias_esp))
 print("Estadístico de prueba:", estadistico_prueba)
 
-# PREGUNTAR CUANTOS GRADOS DE LIBERTAD SON
-# k-1 grados de libertad -1 porque el parametro p no se conoce, entonces los grados de libertad son k-1-1 = k-2
+# k-1 grados de libertad 
+# -1 porque el parametro p no se conoce, 
+# -1 porque bincount me esta contando el 0
+# ,entonces los grados de libertad son k-1-1 = k-2
 df = len(frecuencias_obs) - 3
-print("Grados de libertad:", df)
-print(frecuencias_obs)
 p_valor = 1 - chi2.cdf(estadistico_prueba, df)
 print("P-valor:", p_valor)
 

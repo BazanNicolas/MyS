@@ -61,10 +61,7 @@ ej6d()
 # (e) Calcule el p-valor bajo la hipótesis de que la rueda es justa, usando una simulación.
 
 def generarBinomial(n,p):
-    if p == 1:
-        c = float('inf')
-    else:
-        c = p / (1 - p)
+    c = p / (1 - p)
     prob = (1 - p) ** n
     F = prob; i=0
     U = random()

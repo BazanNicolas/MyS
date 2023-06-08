@@ -57,10 +57,11 @@ def ej4Alt(Nsim):
         for _ in range(n):
             muestra.append(-log(1 - random())/ lamda)
         muestra.sort()
+        # ZeroDivisionError: float division by zero, porque? 
         lamda = n/sum(muestra)
         D = KolmogorovSmirnov(muestra, lamda)
-        if D >= d:
+        if D >= d:  
             pvalor += 1
     return pvalor / Nsim    
 
-print("P-valor:", ej4Alt(100000))
+# print("P-valor:", ej4Alt(100000))
