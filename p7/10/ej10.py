@@ -27,7 +27,7 @@ def ej10():
     desv0 = varianza0 ** 0.5
     d = KolmogorovSmirnov(datos, media0, desv0)
     pvalor = 0
-    for _ in range(10000):
+    for _ in range(1000):
         muestra = np.random.normal(media0, varianza0, n)
         media = sum(muestra) / n
         varianza = sum((x - media)**2 for x in datos) / n-1
@@ -35,7 +35,7 @@ def ej10():
         D = KolmogorovSmirnov(muestra, media, desv)
         if D >= d:
             pvalor += 1
-    return pvalor / 10000
+    return pvalor / 1000
 
 print("P-valor:", ej10())
 
