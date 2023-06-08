@@ -28,9 +28,8 @@ def ej2b(nSim):
     frecuencias_obs = np.bincount(datos)
     m = len(datos)
     # Frecuencias esperadas
-    p = sum(datos) / (n * m)
-    frecuencias_esp = [binomial(i, 8, p)*m for i in range(9)]
-
+    p0 = sum(datos) / (n * m)
+    frecuencias_esp = [binomial(i, 8, p0)*m for i in range(9)]
     # Calcular el estadístico de prueba chi-cuadrada
     t0 = sum((obs - esp)**2 / esp for obs, esp in zip(frecuencias_obs, frecuencias_esp))
     p_valor = 0
@@ -38,7 +37,7 @@ def ej2b(nSim):
         # Generar la muestra 
         muestra = []
         for _ in range(m):
-            muestra.append(generarBinomial(n,p))
+            muestra.append(np.random.binomial(n,p0))
         p = sum(muestra) / (n * m)
         # Contar la cantidad de ocurrencias de cada número
         frecuencias_obs_simuladas = np.bincount(muestra)
@@ -68,9 +67,8 @@ estadistico_prueba = sum((obs - esp)**2 / esp for obs, esp in zip(frecuencias_ob
 
 # k-1 grados de libertad 
 # -1 porque el parametro p no se conoce, 
-# -1 porque bincount me esta contando el 0
 # ,entonces los grados de libertad son k-1-1 = k-2
-df = len(frecuencias_obs) - 3
+df = len(frecuencias_obs) - 2
 p_valor = 1 - chi2.cdf(estadistico_prueba, df)
 print("P-valor:", p_valor)
 

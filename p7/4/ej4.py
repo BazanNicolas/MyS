@@ -49,13 +49,13 @@ def ej4Alt(Nsim):
     datos = [86.0 , 133.0 , 75.0 , 22.0 , 11.0 , 144.0 , 78.0 , 122.0 , 8.0 , 146.0 , 33.0 , 41.0 , 99.0]
     # ordenar los datos
     n = len(datos)
-    lamda = n/sum(datos)
-    d = KolmogorovSmirnov(datos, lamda)
+    lamda0 = n/sum(datos)
+    d = KolmogorovSmirnov(datos, lamda0)
     pvalor = 0
     for _ in range(Nsim):
         muestra = []
         for _ in range(n):
-            muestra.append(-log(1 - random())/ lamda)
+            muestra.append(-log(1 - random())/ lamda0)
         muestra.sort()
         # ZeroDivisionError: float division by zero, porque? 
         lamda = n/sum(muestra)

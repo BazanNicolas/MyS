@@ -22,13 +22,13 @@ def KolmogorovSmirnov(datos, media, desvio):
 def ej10():
     datos = [91.9, 97.8, 111.4, 122.3, 105.4, 95.0, 103.8, 99.6, 96.6, 119.3, 104.8, 101.7]
     n = len(datos)
-    media = sum(datos) / n
-    varianza = sum((x - media)**2 for x in datos) / n-1
-    desv = varianza ** 0.5
-    d = KolmogorovSmirnov(datos, media, desv)
+    media0 = sum(datos) / n
+    varianza0 = sum((x - media0)**2 for x in datos) / n-1
+    desv0 = varianza0 ** 0.5
+    d = KolmogorovSmirnov(datos, media0, desv0)
     pvalor = 0
     for _ in range(10000):
-        muestra = np.random.normal(media, varianza, n)
+        muestra = np.random.normal(media0, varianza0, n)
         media = sum(muestra) / n
         varianza = sum((x - media)**2 for x in datos) / n-1
         desv = varianza ** 0.5

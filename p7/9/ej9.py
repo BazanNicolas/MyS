@@ -25,13 +25,13 @@ def KolmogorovSmirnov(datos, lamda):
 def ej9():
     datos = [1.6, 10.3, 3.5, 13.5, 18.4, 7.7, 24.3, 10.7, 8.4, 4.9, 7.9, 12, 16.2, 6.8, 14.7]
     n = len(datos)
-    lamda = n/sum(datos)
-    d = KolmogorovSmirnov(datos, lamda)
+    lamda0 = n/sum(datos)
+    d = KolmogorovSmirnov(datos, lamda0)
     pvalor = 0
     for _ in range(10000):
         muestra = []
         for _ in range(n):
-            muestra.append(-log(1 - random())/ lamda)
+            muestra.append(-log(1 - random())/ lamda0)
         # o muestra = np.random.exponential( lamda, len(datos))
         muestra.sort()        
         lamda = n/sum(muestra)
