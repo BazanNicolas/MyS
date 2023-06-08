@@ -12,10 +12,7 @@ def binomial(x, n, p):
     return binom.pmf(x, n, p)
 
 def generarBinomial(n,p):
-    if p == 1:
-        c = float('inf')
-    else:
-        c = p / (1 - p)
+    c = p / (1 - p)
     prob = (1 - p) ** n
     F = prob; i=0
     U = random()
@@ -51,7 +48,7 @@ def ej2b(nSim):
             p_valor += 1
     return p_valor / nSim
 
-# print("P-valor simulado:", ej2b(1000))
+print("P-valor simulado:", ej2b(1000))
 # t0 31,49
 #p valor 0,01
 
@@ -61,16 +58,13 @@ def ej2b(nSim):
 datos = [6, 7, 3, 4, 7, 3, 7, 2, 6, 3, 7, 8, 2, 1, 3, 5, 8, 7]
 n = 8
 frecuencias_obs = np.bincount(datos)
-print(frecuencias_obs)
 m = len(datos)
 # Frecuencias esperadas
 p = sum(datos) / (n * m)
-print(p)
 frecuencias_esp = [binomial(i, 8, p)*m for i in range(9)]
 
 # Calcular el estadístico de prueba chi-cuadrada
 estadistico_prueba = sum((obs - esp)**2 / esp for obs, esp in zip(frecuencias_obs, frecuencias_esp))
-print("Estadístico de prueba:", estadistico_prueba)
 
 # k-1 grados de libertad 
 # -1 porque el parametro p no se conoce, 
