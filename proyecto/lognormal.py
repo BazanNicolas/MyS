@@ -6,6 +6,7 @@ from scipy.stats import norm
 import math
 
 file_path = os.path.join(os.path.dirname(__file__), "sample23.dat")
+# Cargar los datos
 data = np.loadtxt(file_path)
 
 # Note: alfa is scale, beta is shape
@@ -14,7 +15,6 @@ data_log = np.log(data)
 n = len(data)
 K = math.floor(math.log2(n)) +1
 
-# Cargar los datos
 # Ajustar los parámetros de la distribución log-normal a partir de los datos
 shape, loc, scale = lognorm.fit(data, floc=0)
 print(f"Lognormal loc: {loc}, scale: {scale}")
@@ -40,14 +40,13 @@ plt.show()
 
 # histogram
 loc, scale = norm.fit(data_log, floc=0)
+print(f"Normal loc: {loc}, scale: {scale}")
 
 # Crear el rango de valores para graficar la distribución Normal
 x = np.linspace(0, np.max(data_log), 100)
 
 mean_log = np.mean(data_log)
 std_log = np.std(data_log)
-print("mean_log: ", mean_log)
-print("std_log: ", std_log)
 # Calcular la función de densidad de probabilidad (PDF) de la distribución Normal
 pdf = norm.pdf(x, loc=mean_log, scale=std_log)
 

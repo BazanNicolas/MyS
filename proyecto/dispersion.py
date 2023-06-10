@@ -2,8 +2,6 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 
-import math
-
 file_path = os.path.join(os.path.dirname(__file__), "sample23.dat")
 data = np.loadtxt(file_path)
 
