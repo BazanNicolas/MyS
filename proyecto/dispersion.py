@@ -14,4 +14,6 @@ x_i_plus_1 = data[1:]  # All elements starting from the second one
 plt.scatter(x_i, x_i_plus_1)
 plt.xlabel('x_i')
 plt.ylabel('x_i+1')
+plt.title('Dispersion de datos')
+plt.grid()
 plt.show()
