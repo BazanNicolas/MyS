@@ -19,7 +19,6 @@ data = np.loadtxt(file_path)
 def lognormalCDF(x, mu, sigma):
     return lognorm.cdf(x, s=sigma, scale=np.exp(mu))
 
-# funcion de distribucion acumulada de la distribucion weibull
 def weibullCDF(x, alpha, beta):
     return 1 - math.exp(-(x/beta)**alpha)
 

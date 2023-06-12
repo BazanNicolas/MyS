@@ -87,7 +87,7 @@ plt.axvline(mu_log, color='b', linestyle='--', linewidth=2, label='Media')
 plt.plot(x, pdf, 'r', lw=2, label='Distribución Normal')
 
 plt.xlabel('x')
-plt.ylabel('Densidad de probabilidad')
+plt.ylabel('y')
 plt.title('Distribución Normal')
 plt.legend()
 plt.grid(True)
