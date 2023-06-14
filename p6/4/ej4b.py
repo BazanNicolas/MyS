@@ -25,7 +25,7 @@ def ej4b():
 # Var(N¯) = Var(N)/n
 # Var(N) = Var(N) = E(N^2) - E(N)^2 = E(N^2) - e^2
 # E(N^2) = sum n=0 hasta inf de (n^2 * P(N=n)) 
-#        = sum  n=2 hasta inf (n^2 * n-1/n!)
+#        = sum n=2 hasta inf (n^2 * n-1/n!)
 # E(N²) = 3e
 # Var(N) = 3e - e^2
 # Var(N¯) = (3e - e^2)/n
