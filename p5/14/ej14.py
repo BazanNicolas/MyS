@@ -1,11 +1,24 @@
-import sys
-sys.path.append('p5/13')
-from ej13 import ej13
+from random import random, choice
+from math import log
 
-T = 1  # Tiempo de simulación: 1 hora
-lamda = 5  # Promedio de llegada de autobuses por hora (proceso de Poisson)
+def Poisson_homogeneo(T, lamda):
+    t = -log(1 - random()) / lamda
+    Eventos = []
+    while t < T:
+        Eventos.append(t)
+        t += -log(1 - random()) / lamda
+    return Eventos, len(Eventos)
 
-fans_arrived, arrival_times = ej13(T, lamda)
+T = 1
+lamda = 5
 
-print("Número de aficionados que llegaron en el instante t = 1 hora:", fans_arrived)
-print("Tiempo de llegada de los aficionados:", arrival_times)
+_, colectivos = Poisson_homogeneo(T, lamda)
+
+aficionados = []
+for _ in range(colectivos):
+    cantidad = choice(range(20, 41))
+    aficionados.append(cantidad)
+
+print(f"Cantidad de colectivos: {colectivos}")
+print(f"Cantidad de aficionados: {aficionados}")
+print(f"Cantidad total de aficionados: {sum(aficionados)}")
