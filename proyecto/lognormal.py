@@ -1,7 +1,7 @@
 import numpy as np
 import os
 import matplotlib.pyplot as plt
-from scipy.stats import lognorm
+from scipy.stats import skew
 from scipy.stats import norm
 import math
 
@@ -67,8 +67,12 @@ plt.show()
 #--------------------------------------------------------------------------------------------
 data_log = np.log(data)
 mu_log = sum(x for x in data_log) / len(data_log)
+print(f"mediana: {np.median(data_log)}")
+print(f"media: {mu_log}")
 sigma_log = math.sqrt(sum((x - mu) ** 2 for x in data_log) / len(data_log))  # sample variance
 print(f"mu: {mu_log}, sigma: {sigma_log}")
+skewness = sum((data_log - mu_log) ** 3) / (n * sigma_log ** (3 / 2))
+print(f"skewness: {skewness}")
 
 # histogram
 # Crear el rango de valores para graficar la distribución Normal

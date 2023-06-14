@@ -19,7 +19,7 @@ data = np.loadtxt(file_path)
 def lognormalCDF(x, mu, sigma):
     return lognorm.cdf(x, s=sigma, scale=np.exp(mu))
 
-def weibullCDF(x, alpha, beta):
+def weibullFDA(x, alpha, beta):
     return 1 - math.exp(-(x/beta)**alpha)
 
 def KolmogorovSmirnovWeibull(datos, alpha, beta):
@@ -28,7 +28,7 @@ def KolmogorovSmirnovWeibull(datos, alpha, beta):
     d = 0
     for i in range(n):
         x = datos[i]
-        d = max(d, (i+1)/n - weibullCDF(x, alpha, beta), weibullCDF(x, alpha, beta) - i/n)
+        d = max(d, (i+1)/n - weibullFDA(x, alpha, beta), weibullFDA(x, alpha, beta) - i/n)
     return d
 
 def KolmogorovSmirnovLognormal(datos, mu, sigma):
@@ -42,7 +42,7 @@ def KolmogorovSmirnovLognormal(datos, mu, sigma):
 
 def pvalorLognormal(data):
     mu_estimado = sum(math.log(x) for x in data) / len(data)
-    sigma_estimado = math.sqrt(sum((math.log(x) - mu_estimado) ** 2 for x in data) / len(data))
+    sigma_estimado = math.sqrt(sum((math.log(x) - mu_estimado) ** 2 for x in data) / (len(data) - 1))
     d = KolmogorovSmirnovLognormal(data, mu_estimado, sigma_estimado)
     pvalor = 0
     Nsim = 1000
@@ -50,7 +50,7 @@ def pvalorLognormal(data):
         muestra_lognormal = np.random.lognormal(mean=mu_estimado, sigma=sigma_estimado, size=len(data))
         muestra_lognormal.sort()
         mu_nuevo = sum(math.log(x) for x in muestra_lognormal) / len(muestra_lognormal)
-        sigma_nuevo = math.sqrt(sum((math.log(x) - mu_nuevo) ** 2 for x in muestra_lognormal) / len(muestra_lognormal))
+        sigma_nuevo = math.sqrt(sum((math.log(x) - mu_nuevo) ** 2 for x in muestra_lognormal) / (len(muestra_lognormal) - 1))
         D = KolmogorovSmirnovLognormal(muestra_lognormal, mu_nuevo, sigma_nuevo)
         if D >= d:
             pvalor += 1

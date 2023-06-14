@@ -100,7 +100,7 @@ def ej2c():
 
 def ej3LogNormal():
     mu_est = sum(math.log(x) for x in data) / n
-    sigma_est = math.sqrt(sum((math.log(x) - mu_est) ** 2 for x in data) / n)
+    sigma_est = math.sqrt(sum((math.log(x) - mu_est) ** 2 for x in data) / (n - 1))
     print("mu estimado con MLE: ", mu_est)
     print("sigma estimado con MLE: ", sigma_est)
     return mu_est, sigma_est

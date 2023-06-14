@@ -4,11 +4,11 @@ from scipy.stats import lognorm
 from scipy.stats import chi2
 import math
 
-def lognormalCDF(x, mu, sigma):
+def lognormalFDA(x, mu, sigma):
     return lognorm.cdf(x, s=sigma, scale=np.exp(mu))
 
 # funcion de distribucion acumulada de la distribucion weibull
-def weibullCDF(x, alpha, beta):
+def weibullFDA(x, alpha, beta):
     return 1 - math.exp(-(x/beta)**alpha)
 
 file_path = os.path.join(os.path.dirname(__file__), "sample23.dat")
@@ -23,10 +23,10 @@ k = math.floor(math.log2(n)) +1
 frecuencias_obs, limites_intervalos = np.histogram(data, bins=k, range=(0, np.max(data)))
 # Calcular la probabilidad esperadas en cada intervalo para la distribución log-normal
 mu = sum(math.log(x) for x in data) / len(data)
-sigma = math.sqrt(sum((math.log(x) - mu) ** 2 for x in data) / len(data))
+sigma = math.sqrt(sum((math.log(x) - mu) ** 2 for x in data) / (len(data)-1))
 
 #probabilities = np.diff(lognorm.cdf(limites_intervalos, sigma, loc=0, scale=np.exp(mu)))
-probabilities = [lognormalCDF(limites_intervalos[i+1], mu, sigma) - lognormalCDF(limites_intervalos[i], mu, sigma) for i in range(len(limites_intervalos) - 1)]
+probabilities = [lognormalFDA(limites_intervalos[i+1], mu, sigma) - lognormalFDA(limites_intervalos[i], mu, sigma) for i in range(len(limites_intervalos) - 1)]
 # Calcular las frecuencias esperadas
 frecuencias_esp = [p * len(data) for p in probabilities]
 
@@ -40,12 +40,8 @@ p_valor_lognormal = 1 - chi2.cdf(estadistico_prueba, df)
 alpha_estimado = 2.633827472819693
 beta_estimado = 13.073900340236815
 
-# funcion que calcula acumulada de la distribución Weibull entre -inf y x
-def weibullCDF(x, alpha, beta):
-    return 1 - math.exp(-(x/beta)**alpha)
-
 # Calcular las probabilidades esperadas en cada intervalo para la distribución Weibull
-probabilities = [weibullCDF(limites_intervalos[i+1], alpha_estimado, beta_estimado) - weibullCDF(limites_intervalos[i], alpha_estimado, beta_estimado) for i in range(len(limites_intervalos) - 1)]
+probabilities = [weibullFDA(limites_intervalos[i+1], alpha_estimado, beta_estimado) - weibullFDA(limites_intervalos[i], alpha_estimado, beta_estimado) for i in range(len(limites_intervalos) - 1)]
 #probabilities = np.diff(weibull_min.cdf(limites_intervalos, alpha_estimado, loc=0, scale=beta_estimado))
 
 # Calcular las frecuencias esperadas
