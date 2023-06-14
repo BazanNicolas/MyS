@@ -15,3 +15,12 @@ def ej13(T, lamda):
             NT += 1
             Eventos.append(t)
     return NT, Eventos
+
+
+def Poisson_homogeneo(T,lamda):
+    t = -log(1-random())/lamda
+    Eventos = []
+    while t < T:
+        Eventos.append(t)
+        t += -log(1-random())/lamda
+    return Eventos, len(Eventos)
