@@ -17,7 +17,6 @@ def ej1b(nSim):
         N2 = random.binomial(564 - N1, 2/3) # 2/3 = 1/2 / (1 - 1/4) = p2 / (1 - p1)
         N3 = 564 - N1 - N2
         frecuencias_obs = [N1, N2, N3]
-        frecuencias_esp = [141, 282, 141]
         t = sum((obs - esp)**2 / esp for obs, esp in zip(frecuencias_obs, frecuencias_esp))
         # t es el estadístico de prueba de la muestra simulada con los datos simulados (N1, N2, N3)
         if t >= t0: #t0 es el estadístico de prueba de la muestra original con los datos observados (141, 291, 132)

@@ -4,8 +4,6 @@ cada una con media 1. Luego, en base al estadístico de prueba de Kolmogorov-Smi
 p−valor de la prueba de que los datos realmente provienen de una distribución exponencial con media 1.
 '''
 import numpy as np
-from math import log
-from random import random
 
 def exponencial(x, lamda):
     return 1 - np.exp(-x * lamda)
@@ -31,17 +29,19 @@ def KolmogorovSmirnovUnif(datos):
 def ej7():
     # F(x) = 1 - e^(-x)
     n = 30
-    datos = []
-    for _ in range(n):
-        datos.append(-log(1 - random()))
+    datos = np.random.exponential(1, size=n)
+    # o si no
+    # for _ in range(n):
+    #     datos.append(-log(1 - random()))
     datos.sort()
     d = KolmogorovSmirnov(datos, 1)
     pvalor = 0
-    for _ in range(10000):
+    for _ in range(1000):
         uniformes = np.random.uniform(0, 1, n)
+        uniformes.sort()
         D = KolmogorovSmirnovUnif(uniformes)
         if D >= d:
             pvalor += 1
-    return pvalor / 10000
+    return pvalor / 1000
 
 print("P-valor:", ej7())

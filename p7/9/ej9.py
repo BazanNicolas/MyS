@@ -7,8 +7,9 @@ Pruebe la hipótesis nula de que estas observaciones pueden ser consideradas com
 distribución exponencial.
 '''
 import numpy as np
-from math import log
 from random import random
+from math import log
+from scipy.stats import expon
 
 def exponencial(x, lamda):
     return 1 - np.exp(-x * lamda)
@@ -29,10 +30,12 @@ def ej9():
     d = KolmogorovSmirnov(datos, lamda0)
     pvalor = 0
     for _ in range(10000):
-        muestra = []
-        for _ in range(n):
-            muestra.append(-log(1 - random())/ lamda0)
-        # o muestra = np.random.exponential( lamda, len(datos))
+        # muestra = expon.rvs(lamda0, size=n)
+        muestra = np.random.exponential(lamda0, size=n)
+        # o si no
+        # muestra = []
+        # for _ in range(n):
+        #     muestra.append(-log(1 - random())/ lamda0)
         muestra.sort()        
         lamda = n/sum(muestra)
         D = KolmogorovSmirnov(muestra, lamda)

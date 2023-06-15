@@ -8,20 +8,6 @@ from random import random
 import numpy as np
 from scipy.stats import chi2
 
-def binomial(x, n, p):
-    return binom.pmf(x, n, p)
-
-def generarBinomial(n,p):
-    c = p / (1 - p)
-    prob = (1 - p) ** n
-    F = prob; i=0
-    U = random()
-    while U >= F:
-        prob *= c * (n-i) / (i+1)
-        F += prob
-        i += 1
-    return i
-
 def ej2b(nSim):
     datos = [6, 7, 3, 4, 7, 3, 7, 2, 6, 3, 7, 8, 2, 1, 3, 5, 8, 7]
     n = 8
@@ -29,19 +15,17 @@ def ej2b(nSim):
     m = len(datos)
     # Frecuencias esperadas
     p0 = sum(datos) / (n * m)
-    frecuencias_esp = [binomial(i, 8, p0)*m for i in range(9)]
+    frecuencias_esp = [binom.pmf(i, 8, p0)*m for i in range(9)]
     # Calcular el estadístico de prueba chi-cuadrada
     t0 = sum((obs - esp)**2 / esp for obs, esp in zip(frecuencias_obs, frecuencias_esp))
     p_valor = 0
     for _ in range(nSim):
         # Generar la muestra 
-        muestra = []
-        for _ in range(m):
-            muestra.append(np.random.binomial(n,p0))
+        muestra = np.random.binomial(n, p0, size=m)
         p = sum(muestra) / (n * m)
         # Contar la cantidad de ocurrencias de cada número
         frecuencias_obs_simuladas = np.bincount(muestra)
-        frecuencias_esp_simuladas = [binomial(i, 8, p)*m for i in range(9)]
+        frecuencias_esp_simuladas = [binom.pmf(i, 8, p)*m for i in range(9)]
         t = sum((obs - esp)**2 / esp for obs, esp in zip(frecuencias_obs_simuladas, frecuencias_esp_simuladas))
         if t >= t0:
             p_valor += 1
@@ -60,7 +44,7 @@ frecuencias_obs = np.bincount(datos)
 m = len(datos)
 # Frecuencias esperadas
 p = sum(datos) / (n * m)
-frecuencias_esp = [binomial(i, 8, p)*m for i in range(9)]
+frecuencias_esp = [binom.pmf(i, 8, p)*m for i in range(9)]
 
 # Calcular el estadístico de prueba chi-cuadrada
 estadistico_prueba = sum((obs - esp)**2 / esp for obs, esp in zip(frecuencias_obs, frecuencias_esp))

@@ -1,6 +1,6 @@
 from tabulate import tabulate
-from random import random
 import numpy as np
+
 '''
 Ejercicio 6. Un escribano debe validar un juego en cierto programa de televisión. El mismo consiste
 en hacer girar una rueda y obtener un premio según el sector de la rueda que coincida con una aguja.
@@ -43,8 +43,8 @@ ej6a()
 def ej6d():
     frecuencias_obs = [188, 138, 87, 65, 48, 32, 30, 34, 13, 2]
     n = sum(frecuencias_obs)
-    frecuencias = [0.31, 0.22, 0.12, 0.10, 0.08, 0.06, 0.04, 0.04, 0.02, 0.01]
-    frecuencias_esperadas = [frecuencia * n for frecuencia in frecuencias]
+    probabilidades = [0.31, 0.22, 0.12, 0.10, 0.08, 0.06, 0.04, 0.04, 0.02, 0.01]
+    frecuencias_esperadas = [p * n for p in probabilidades]
 
     # Calcular el estadístico de prueba chi-cuadrada
     estadistico_prueba = sum((obs - esp)**2 / esp for obs, esp in zip(frecuencias_obs, frecuencias_esperadas))
@@ -60,22 +60,12 @@ ej6d()
 
 # (e) Calcule el p-valor bajo la hipótesis de que la rueda es justa, usando una simulación.
 
-def generarBinomial(n,p):
-    c = p / (1 - p)
-    prob = (1 - p) ** n
-    F = prob; i=0
-    U = random()
-    while U >= F:
-        prob *= c * (n-i) / (i+1)
-        F += prob
-        i += 1
-    return i
-
 def ej6e(nSim):
     frecuencias_obs = [188, 138, 87, 65, 48, 32, 30, 34, 13, 2]
     n = sum(frecuencias_obs)
-    frecuencias = [0.31, 0.22, 0.12, 0.10, 0.08, 0.06, 0.04, 0.04, 0.02, 0.01]
-    frecuencias_esperadas = [frecuencia * n for frecuencia in frecuencias]
+    probabilidades = [0.31, 0.22, 0.12, 0.10, 0.08, 0.06, 0.04, 0.04, 0.02, 0.01]
+    frecuencias_esperadas = [p * n for p in probabilidades]
+    estadistico_prueba = sum((obs - esp)**2 / esp for obs, esp in zip(frecuencias_obs, frecuencias_esperadas))
 
     # Calcular el estadístico de prueba chi-cuadrada
     estadistico_prueba = sum((obs - esp)**2 / esp for obs, esp in zip(frecuencias_obs, frecuencias_esperadas))
@@ -83,8 +73,8 @@ def ej6e(nSim):
     for _ in range(nSim):
         # Generar la muestra 
         frecuencias_obs_simuladas = []
-        for i in range(len(frecuencias)):
-            frecuencias_obs_simuladas.append(generarBinomial(n,frecuencias[i]))
+        for i in range(len(probabilidades)):
+            frecuencias_obs_simuladas.append(np.random.binomial(n, probabilidades[i]))
         # Calcular el estadístico de prueba chi-cuadrada
         t = sum((obs - esp)**2 / esp for obs, esp in zip(frecuencias_obs_simuladas, frecuencias_esperadas))
         if t >= estadistico_prueba:
@@ -94,3 +84,46 @@ def ej6e(nSim):
 print("P-valor simulado:", ej6e(1000))
 
 # P-valor es 0.36605389988682613 entonces podemos concluír que la rueda es justa
+
+# Forma alternativa calculando N1, N2, ..., N10
+
+# def ej6e(nSim):
+#     N = [188, 138, 87, 65, 48, 32, 30, 34, 13, 2]
+#     n = sum(N)
+#     p = [0.31, 0.22, 0.12, 0.1, 0.08, 0.06, 0.04, 0.04, 0.02, 0.01]
+#     esp = [p[i] * n for i in range(len(N))]
+#     t0 = sum((N[i] - esp[i]) ** 2 / esp[i] for i in range(len(N)))
+#     pvalor = 0
+#     for _ in range(nSim):
+#         N1 = np.random.binomial(n, p[0])
+#         N2 = np.random.binomial(n - N1, p[1] / (1 - p[0]))
+#         N3 = np.random.binomial(n - N1 - N2, p[2] / (1 - p[0] - p[1]))
+#         N4 = np.random.binomial(n - N1 - N2 - N3, p[3] / (1 - p[0] - p[1] - p[2]))
+#         N5 = np.random.binomial(
+#             n - N1 - N2 - N3 - N4, p[4] / (1 - p[0] - p[1] - p[2] - p[3])
+#         )
+#         N6 = np.random.binomial(
+#             n - N1 - N2 - N3 - N4 - N5, p[5] / (1 - p[0] - p[1] - p[2] - p[3] - p[4])
+#         )
+#         N7 = np.random.binomial(
+#             n - N1 - N2 - N3 - N4 - N5 - N6,
+#             p[6] / (1 - p[0] - p[1] - p[2] - p[3] - p[4] - p[5]),
+#         )
+#         N8 = np.random.binomial(
+#             n - N1 - N2 - N3 - N4 - N5 - N6 - N7,
+#             p[7] / (1 - p[0] - p[1] - p[2] - p[3] - p[4] - p[5] - p[6]),
+#         )
+#         N9 = np.random.binomial(
+#             n - N1 - N2 - N3 - N4 - N5 - N6 - N7 - N8,
+#             p[8] / (1 - p[0] - p[1] - p[2] - p[3] - p[4] - p[5] - p[6] - p[7]),
+#         )
+#         N10 = n - N1 - N2 - N3 - N4 - N5 - N6 - N7 - N8 - N9
+#         N = [N1, N2, N3, N4, N5, N6, N7, N8, N9, N10]
+#         t = sum((N[i] - esp[i]) ** 2 / esp[i] for i in range(len(N)))
+#         if t >= t0:
+#             pvalor += 1
+
+#     print("El pvalor es (Simulacion): ", pvalor / nSim)
+#     return pvalor / nSim
+
+# ej6e(1000)

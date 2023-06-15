@@ -5,6 +5,7 @@ Calcular una aproximación del p−valor.
 '''
 from scipy.stats import norm
 import numpy as np
+from scipy.stats import norm
 
 def normal(x, media, desvio):
     valor_ajustado = (x - media) / desvio
@@ -16,14 +17,14 @@ def KolmogorovSmirnov(datos, media, desvio):
     d = 0
     for i in range(n):
         x = datos[i]
-        d = max(d, (i+1)/n - normal(x, media, desvio), normal(x, media, desvio) - i/n)
+        d = max(d, (i+1)/n - norm.cdf(x, media, desvio), norm.cdf(x, media, desvio) - i/n)
     return d
 
 def ej10():
     datos = [91.9, 97.8, 111.4, 122.3, 105.4, 95.0, 103.8, 99.6, 96.6, 119.3, 104.8, 101.7]
     n = len(datos)
     media0 = sum(datos) / n
-    varianza0 = sum((x - media0)**2 for x in datos) / n-1
+    varianza0 = sum((x - media0)**2 for x in datos) / (n-1)
     desv0 = varianza0 ** 0.5
     d = KolmogorovSmirnov(datos, media0, desv0)
     pvalor = 0
@@ -38,5 +39,3 @@ def ej10():
     return pvalor / 1000
 
 print("P-valor:", ej10())
-
-# Preguntar si esta bien, pareciera no terminar nunca

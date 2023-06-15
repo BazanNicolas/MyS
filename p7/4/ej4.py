@@ -41,7 +41,7 @@ def ej4(nSim):
             pvalor += 1
     return pvalor / nSim
 
-print("P-valor:", ej4(100000))
+print("P-valor:", ej4(1000))
 
 # Si se tuviese que estimar el parametro
 
@@ -64,4 +64,4 @@ def ej4Alt(Nsim):
             pvalor += 1
     return pvalor / Nsim    
 
-# print("P-valor:", ej4Alt(100000))
+print("P-valor:", ej4Alt(1000))
