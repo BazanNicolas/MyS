@@ -9,6 +9,7 @@ distribución de Poisson con parámetro λ=3", considerando las frecuencias del 
 '''
 import numpy as np
 from scipy.stats import chi2
+from scipy.stats import poisson
 
 #funcion que cuenta las ocurrencias de cada numero en un array si son menores a 6 y agrupa los mayores o iguales a 6
 def contar_ocurrencias(datos):
@@ -21,16 +22,20 @@ def contar_ocurrencias(datos):
     return ocurrencias
 
 #funcion de probabilidad de masa de Poisson
-def poisson(x, lamda):
+def poissonPMF(x, lamda):
+    # alternativa: return poisson.pmf(x, lamda)
     return (lamda**x * np.exp(-lamda)) / np.math.factorial(x)
 
 # funcion que calcula la P(x>=6) de la distribucion de Poisson
 def poisson_mayor_igual_6(lamda):
-    return 1 - sum(poisson(i, lamda) for i in range(6))
+    return 1 - sum(poissonPMF(i, lamda) for i in range(6))
+#Otra opcion para calcular lo de arriba es con la FDA de la distribucion de Poisson
+# def poisson_mayor_igual_6(lamda):
+#     return 1 - poisson.cdf(5, lamda)
 
 datos = [2, 1, 1, 8, 0, 5, 10, 4, 2, 2, 3, 3, 4, 6, 3, 3, 2, 4, 5, 6]
 n = len(datos)
-p_i = [poisson(i, 3) for i in range(6)]
+p_i = [poissonPMF(i, 3) for i in range(6)]
 p_i.append(poisson_mayor_igual_6(3))
 # *i)Utilizando la prueba de Pearson con aproximación chi-cuadrada
 def eja():
