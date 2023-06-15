@@ -56,10 +56,10 @@ def ii():
     result = minimize_scalar(lambda x: -lamda_t_2(x), bounds=[0,2], method='bounded')
     max = -result.fun
     lamda.append(max)
-    result = minimize_scalar(lambda x: -lamda_t_2(x), bounds=[2,4], method='bounded')
+    result = minimize_scalar(lambda x: -lamda_t_2(x), bounds=[2,3], method='bounded')
     max = -result.fun
     lamda.append(max)
-    result = minimize_scalar(lambda x: -lamda_t_2(x), bounds=[4,5], method='bounded')
+    result = minimize_scalar(lambda x: -lamda_t_2(x), bounds=[3,5], method='bounded')
     max = -result.fun
     lamda.append(max)
     s = 0 
@@ -68,13 +68,10 @@ def ii():
         s += arrivals
     print(f"Promedio de arribos con intervalos {s/1000}")
 
-    #print(f"Tiempo de llegada de los aficionados: {arrival_times}")
-    #print(f"Cantidad de arribos {arrivals}")
-
 def iii():
     interv = [3,4,6]
     lamda = []
-    result = minimize_scalar(lambda x: -lamda_t_3(x), bounds=[2,3], method='bounded')
+    result = minimize_scalar(lambda x: -lamda_t_3(x), bounds=[0,3], method='bounded')
     max = -result.fun
     lamda.append(max)
     result = minimize_scalar(lambda x: -lamda_t_3(x), bounds=[3,4], method='bounded')
@@ -84,8 +81,6 @@ def iii():
     max = -result.fun
     lamda.append(max)
     arrivals, arrival_times = Poisson_adelgazamiento_mejorado(6, interv, lamda, lamda_t_3)
-    #print(f"Tiempo de llegada de los aficionados: {arrival_times}")
-    #print(f"Cantidad de arribos {arrivals}")
     s = 0 
     for i in range(1000):
         arrivals, arrival_times = Poisson_adelgazamiento_mejorado(6, interv, lamda, lamda_t_3)
